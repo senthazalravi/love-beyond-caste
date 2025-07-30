@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       cnb_profiles: {
         Row: {
+          about_me: string | null
           age: number | null
           city: string | null
           consent_any_caste: boolean | null
@@ -39,6 +40,7 @@ export type Database = {
           whatsapp_number: string
         }
         Insert: {
+          about_me?: string | null
           age?: number | null
           city?: string | null
           consent_any_caste?: boolean | null
@@ -62,6 +64,7 @@ export type Database = {
           whatsapp_number: string
         }
         Update: {
+          about_me?: string | null
           age?: number | null
           city?: string | null
           consent_any_caste?: boolean | null
@@ -83,6 +86,45 @@ export type Database = {
           updated_at?: string
           user_id?: string
           whatsapp_number?: string
+        }
+        Relationships: []
+      }
+      user_settings: {
+        Row: {
+          created_at: string
+          email_notifications: boolean | null
+          id: string
+          language_preference: string | null
+          profile_visibility: boolean | null
+          show_email_publicly: boolean | null
+          show_whatsapp_publicly: boolean | null
+          theme_preference: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          language_preference?: string | null
+          profile_visibility?: boolean | null
+          show_email_publicly?: boolean | null
+          show_whatsapp_publicly?: boolean | null
+          theme_preference?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          language_preference?: string | null
+          profile_visibility?: boolean | null
+          show_email_publicly?: boolean | null
+          show_whatsapp_publicly?: boolean | null
+          theme_preference?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

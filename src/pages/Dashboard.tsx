@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User, MessageCircle, Phone } from 'lucide-react';
+import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User, MessageCircle, Settings } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +23,7 @@ interface Profile {
   city: string;
   email: string;
   whatsapp_number: string;
+  about_me?: string;
   is_admin: boolean;
 }
 
@@ -148,14 +149,24 @@ const Dashboard = () => {
             <Heart className="w-8 h-8 text-love-primary fill-current" />
             <h1 className="text-2xl font-bold text-love-primary">Caste No Bar</h1>
           </div>
-          <Button 
-            onClick={handleSignOut}
-            variant="outline"
-            className="flex items-center gap-2"
-          >
-            <LogOut className="w-4 h-4" />
-            Sign Out
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button 
+              onClick={() => navigate('/settings')}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <Settings className="w-4 h-4" />
+              Settings
+            </Button>
+            <Button 
+              onClick={handleSignOut}
+              variant="outline"
+              className="flex items-center gap-2"
+            >
+              <LogOut className="w-4 h-4" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Filters */}
@@ -273,13 +284,12 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  {/* WhatsApp Display */}
-                  {profile.whatsapp_number && (
+                  {/* About Me Display */}
+                  {profile.about_me && (
                     <div className="bg-love-accent/20 p-3 rounded-lg">
-                      <div className="flex items-center justify-center gap-2 text-sm text-love-primary font-semibold">
-                        <Phone className="w-4 h-4" />
-                        <span>WhatsApp: {profile.whatsapp_number}</span>
-                      </div>
+                      <p className="text-sm text-gray-700 text-center leading-relaxed">
+                        "{profile.about_me}"
+                      </p>
                     </div>
                   )}
 

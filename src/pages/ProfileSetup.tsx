@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -22,6 +23,7 @@ const ProfileSetup = () => {
     marriageTimeframe: '',
     city: '',
     email: '',
+    aboutMe: '',
     consentNoDowry: false,
     consentMedicalReport: false,
     consentAnyCaste: false,
@@ -128,6 +130,7 @@ const ProfileSetup = () => {
           marriage_timeframe: formData.marriageTimeframe,
           city: formData.city,
           email: formData.email,
+          about_me: formData.aboutMe,
           photo_url: photoUrl,
           consent_no_dowry: formData.consentNoDowry,
           consent_medical_report: formData.consentMedicalReport,
@@ -275,6 +278,21 @@ const ProfileSetup = () => {
                     placeholder="+1234567890"
                     required
                   />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">About Me *</label>
+                <Textarea
+                  value={formData.aboutMe}
+                  onChange={(e) => setFormData({ ...formData, aboutMe: e.target.value })}
+                  placeholder="Tell us about yourself, your values, what you're looking for in a partner..."
+                  className="min-h-[120px] resize-none"
+                  maxLength={500}
+                  required
+                />
+                <div className="text-xs text-gray-500 text-right">
+                  {formData.aboutMe.length}/500 characters
                 </div>
               </div>
 
