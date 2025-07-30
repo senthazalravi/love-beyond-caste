@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User } from 'lucide-react';
+import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User, MessageCircle, Phone } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,13 +14,15 @@ import loveBackground from '@/assets/love-background.jpg';
 interface Profile {
   id: string;
   name: string;
-  date_of_birth: string;
+  age?: number;
+  date_of_birth?: string;
   profession: string;
   gender: string;
   photo_url?: string;
   marriage_timeframe: string;
   city: string;
   email: string;
+  whatsapp_number: string;
   is_admin: boolean;
 }
 
@@ -91,7 +93,7 @@ const Dashboard = () => {
     if (filters.age && filters.age !== 'all') {
       const [minAge, maxAge] = filters.age.split('-').map(Number);
       filtered = filtered.filter(profile => {
-        const age = new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear();
+        const age = profile.age || (profile.date_of_birth ? calculateAge(profile.date_of_birth) : 0);
         return age >= minAge && age <= maxAge;
       });
     }
@@ -248,7 +250,9 @@ const Dashboard = () => {
                   {/* Profile Info */}
                   <div>
                     <h3 className="text-xl font-semibold text-love-primary">{profile.name}</h3>
-                    <p className="text-gray-600">{calculateAge(profile.date_of_birth)} years old</p>
+                    <p className="text-gray-600">
+                      {profile.age || (profile.date_of_birth ? calculateAge(profile.date_of_birth) : 'Age not specified')} years old
+                    </p>
                   </div>
 
                   {/* Details */}
@@ -269,19 +273,44 @@ const Dashboard = () => {
                     </div>
                   </div>
 
-                  {/* Contact Button */}
-                  <Button 
-                    className="w-full bg-gradient-to-r from-love-primary to-love-secondary hover:from-love-primary/90 hover:to-love-secondary/90 text-white"
-                    onClick={() => {
-                      toast({
-                        title: "Contact Info",
-                        description: `WhatsApp: ${profile.email} | Email: ${profile.email}`,
-                      });
-                    }}
-                  >
-                    <Heart className="w-4 h-4 mr-2 fill-current" />
-                    Connect
-                  </Button>
+                  {/* WhatsApp Display */}
+                  {profile.whatsapp_number && (
+                    <div className="bg-love-accent/20 p-3 rounded-lg">
+                      <div className="flex items-center justify-center gap-2 text-sm text-love-primary font-semibold">
+                        <Phone className="w-4 h-4" />
+                        <span>WhatsApp: {profile.whatsapp_number}</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Contact Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    {profile.whatsapp_number && (
+                      <Button 
+                        className="flex-1 bg-green-500 hover:bg-green-600 text-white transition-colors"
+                        onClick={() => {
+                          const whatsappUrl = `https://wa.me/${profile.whatsapp_number.replace(/[^0-9]/g, '')}?text=Hi%20${encodeURIComponent(profile.name)},%20I%20found%20your%20profile%20on%20Caste%20No%20Bar%20and%20would%20like%20to%20connect.`;
+                          window.open(whatsappUrl, '_blank');
+                        }}
+                      >
+                        <MessageCircle className="w-4 h-4 mr-2" />
+                        WhatsApp
+                      </Button>
+                    )}
+                    <Button 
+                      className="flex-1 bg-gradient-to-r from-love-primary to-love-secondary hover:from-love-primary/90 hover:to-love-secondary/90 text-white"
+                      onClick={() => {
+                        toast({
+                          title: "Contact Info",
+                          description: `WhatsApp: ${profile.whatsapp_number || 'Not provided'} | Email: ${profile.email}`,
+                          duration: 5000,
+                        });
+                      }}
+                    >
+                      <Heart className="w-4 h-4 mr-2 fill-current" />
+                      Details
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

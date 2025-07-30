@@ -5,19 +5,18 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Heart, Upload, CalendarIcon } from 'lucide-react';
+import { Heart, Upload } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { format } from 'date-fns';
+
 import loveBackground from '@/assets/love-background.jpg';
 
 const ProfileSetup = () => {
   const [formData, setFormData] = useState({
     name: '',
-    dateOfBirth: undefined as Date | undefined,
+    age: '',
+    whatsappNumber: '',
     profession: '',
     gender: '',
     marriageTimeframe: '',
@@ -122,7 +121,8 @@ const ProfileSetup = () => {
         .from('cnb_profiles')
         .update({
           name: formData.name,
-          date_of_birth: formData.dateOfBirth?.toISOString().split('T')[0],
+          age: parseInt(formData.age),
+          whatsapp_number: formData.whatsappNumber,
           profession: formData.profession,
           gender: formData.gender,
           marriage_timeframe: formData.marriageTimeframe,
@@ -192,26 +192,16 @@ const ProfileSetup = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Date of Birth *</label>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="w-full justify-start text-left font-normal"
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {formData.dateOfBirth ? format(formData.dateOfBirth, "PPP") : "Pick a date"}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={formData.dateOfBirth}
-                        onSelect={(date) => setFormData({ ...formData, dateOfBirth: date })}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <label className="text-sm font-medium">Age *</label>
+                  <Input
+                    type="number"
+                    min="18"
+                    max="80"
+                    value={formData.age}
+                    onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                    placeholder="Your age"
+                    required
+                  />
                 </div>
 
                 <div className="space-y-2">
@@ -264,15 +254,28 @@ const ProfileSetup = () => {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Email Address *</label>
-                <Input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="your.email@example.com"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Email Address *</label>
+                  <Input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">WhatsApp Number *</label>
+                  <Input
+                    type="tel"
+                    value={formData.whatsappNumber}
+                    onChange={(e) => setFormData({ ...formData, whatsappNumber: e.target.value })}
+                    placeholder="+1234567890"
+                    required
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
