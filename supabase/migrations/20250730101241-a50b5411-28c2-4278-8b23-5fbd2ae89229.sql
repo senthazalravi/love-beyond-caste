@@ -1,0 +1,36 @@
+-- Add user profile for ravi.antone@gmail.com
+INSERT INTO public.cnb_profiles (
+  id,
+  user_id,
+  whatsapp_number,
+  password_pin,
+  name,
+  date_of_birth,
+  profession,
+  gender,
+  marriage_timeframe,
+  city,
+  email,
+  consent_no_dowry,
+  consent_medical_report,
+  consent_any_caste,
+  consent_any_religion,
+  consent_share_contact
+) VALUES (
+  gen_random_uuid(),
+  gen_random_uuid(),
+  '+91 99999 88888',
+  '1111',
+  'Ravi Antone',
+  '1990-05-15',
+  'Software Developer',
+  'Male',
+  '6-12 months',
+  'Chennai',
+  'ravi.antone@gmail.com',
+  true,
+  true,
+  true,
+  true,
+  true
+);
