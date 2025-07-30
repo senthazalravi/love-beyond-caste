@@ -126,7 +126,7 @@ const Auth = () => {
                   placeholder="+91 98765 43210"
                   value={whatsappNumber}
                   onChange={(e) => setWhatsappNumber(e.target.value)}
-                  className="pl-10 border-love-primary/30 focus:border-love-primary"
+                  className="pl-10 text-left border-love-primary/30 focus:border-love-primary"
                   required
                 />
               </div>
@@ -140,7 +140,7 @@ const Auth = () => {
                 value={pin}
                 onChange={(e) => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
                 maxLength={4}
-                className="text-center text-xl tracking-widest border-love-primary/30 focus:border-love-primary"
+                className="text-left text-xl tracking-widest border-love-primary/30 focus:border-love-primary"
                 required
               />
             </div>
@@ -154,7 +154,7 @@ const Auth = () => {
                   value={confirmPin}
                   onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
                   maxLength={4}
-                  className="text-center text-xl tracking-widest border-love-primary/30 focus:border-love-primary"
+                  className="text-left text-xl tracking-widest border-love-primary/30 focus:border-love-primary"
                   required
                 />
               </div>
