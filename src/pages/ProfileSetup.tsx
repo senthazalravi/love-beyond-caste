@@ -182,6 +182,17 @@ const ProfileSetup = () => {
             <CardDescription className="text-gray-600">
               Fill out your profile to find your perfect match, or skip to browse other profiles
             </CardDescription>
+            
+            {/* Visibility Notice */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-love-primary/10 to-love-secondary/10 border border-love-primary/30 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <Heart className="w-4 h-4 text-love-primary fill-current" />
+                <h4 className="font-semibold text-love-primary">Boost Your Profile Visibility</h4>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed">
+                Complete all profile details accurately to maximize your visibility! Profiles with complete information including age, profession, and location get displayed to more potential matches and appear higher in search results.
+              </p>
+            </div>
           </CardHeader>
 
           <CardContent>
