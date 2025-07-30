@@ -8,32 +8,39 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Romantic love theme colors */
-    --background: 350 50% 98%;
-    --foreground: 340 80% 15%;
+    /* Enhanced romantic love theme colors */
+    --background: 350 55% 97%;
+    --foreground: 340 85% 12%;
 
-    --card: 0 20% 99%;
-    --card-foreground: 340 80% 15%;
+    --card: 0 30% 98%;
+    --card-foreground: 340 85% 12%;
 
-    --popover: 0 20% 99%;
-    --popover-foreground: 340 80% 15%;
+    --popover: 0 30% 98%;
+    --popover-foreground: 340 85% 12%;
 
-    --primary: 340 80% 55%;
+    --primary: 340 85% 50%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 330 60% 92%;
-    --secondary-foreground: 340 80% 25%;
+    --secondary: 330 65% 88%;
+    --secondary-foreground: 340 85% 20%;
 
-    --muted: 340 30% 95%;
-    --muted-foreground: 340 20% 45%;
+    --muted: 340 35% 92%;
+    --muted-foreground: 340 25% 40%;
 
-    --accent: 350 70% 88%;
-    --accent-foreground: 340 80% 25%;
+    --accent: 350 75% 85%;
+    --accent-foreground: 340 85% 20%;
 
-    /* Love theme gradients and effects */
-    --love-gradient: linear-gradient(135deg, hsl(340 80% 55%), hsl(320 70% 65%));
-    --love-glow: 0 0 20px hsla(340 80% 55% / 0.3);
-    --heart-shadow: 0 4px 15px hsla(340 80% 55% / 0.2);
+    /* Enhanced love theme gradients and effects */
+    --love-primary: 340 85% 50%;
+    --love-secondary: 320 75% 60%;
+    --love-tertiary: 300 70% 70%;
+    --love-gradient: linear-gradient(135deg, hsl(var(--love-primary)), hsl(var(--love-secondary)), hsl(var(--love-tertiary)));
+    --love-gradient-subtle: linear-gradient(135deg, hsl(340 85% 50% / 0.1), hsl(320 75% 60% / 0.1));
+    --love-glow: 0 0 30px hsla(340 85% 50% / 0.4);
+    --love-glow-soft: 0 0 15px hsla(340 85% 50% / 0.2);
+    --heart-shadow: 0 8px 25px hsla(340 85% 50% / 0.25);
+    --footer-gradient: linear-gradient(135deg, hsl(340 85% 50% / 0.8), hsl(320 75% 60% / 0.8));
+    --footer-glow: 0 -2px 20px hsla(340 85% 50% / 0.3);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;

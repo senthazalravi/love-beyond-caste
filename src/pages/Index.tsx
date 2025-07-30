@@ -99,10 +99,22 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <footer className="py-6 text-center text-white/80 space-y-2">
-          <p>Created by <a href="https://x.com/senthazalravi" target="_blank" rel="noopener noreferrer" className="text-love-primary hover:underline">@senthazalravi</a></p>
-          <p>Copyright 2025 Lovable Dev</p>
+        {/* Enhanced Footer */}
+        <footer className="relative mt-16 py-8 bg-gradient-to-r from-love-primary/90 to-love-secondary/90 backdrop-blur-sm border-t border-white/20">
+          <div className="absolute inset-0 bg-gradient-to-r from-love-primary/20 to-love-secondary/20"></div>
+          <div className="relative z-10 text-center text-white space-y-4">
+            <div className="flex items-center justify-center gap-2 text-xl font-semibold">
+              <Heart className="w-6 h-6 fill-current animate-pulse" />
+              <span>Caste No Bar</span>
+              <Heart className="w-6 h-6 fill-current animate-pulse" />
+            </div>
+            <p className="text-white/90 text-lg font-medium">Love Beyond Boundaries</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
+              <p>Created with ❤️ by <a href="https://x.com/senthazalravi" target="_blank" rel="noopener noreferrer" className="text-white hover:text-love-tertiary font-semibold underline decoration-white/50 hover:decoration-love-tertiary transition-colors">@senthazalravi</a></p>
+              <span className="hidden sm:inline text-white/60">•</span>
+              <p className="text-white/80">© 2025 Lovable Dev</p>
+            </div>
+          </div>
         </footer>
       </div>
     </div>
