@@ -38,29 +38,49 @@ const ProfileSetup = () => {
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setPhoto(e.target.files[0]);
+      const file = e.target.files[0];
+      console.log('Photo selected:', file.name, file.size, file.type);
+      setPhoto(file);
+      toast({
+        title: "Photo Selected",
+        description: `Selected: ${file.name}`,
+      });
     }
   };
 
   const uploadPhoto = async (file: File, userId: string) => {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userId}/profile.${fileExt}`;
-    
-    const { error } = await supabase.storage
-      .from('cnb-photos')
-      .upload(fileName, file, {
-        upsert: true
-      });
+    try {
+      console.log('Starting photo upload for user:', userId);
+      console.log('File details:', { name: file.name, size: file.size, type: file.type });
+      
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${userId}/profile.${fileExt}`;
+      
+      console.log('Uploading to:', fileName);
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('cnb-photos')
+        .upload(fileName, file, {
+          upsert: true
+        });
 
-    if (error) {
+      if (uploadError) {
+        console.error('Upload error:', uploadError);
+        throw uploadError;
+      }
+
+      console.log('Upload successful:', uploadData);
+
+      const { data: urlData } = supabase.storage
+        .from('cnb-photos')
+        .getPublicUrl(fileName);
+
+      console.log('Public URL:', urlData.publicUrl);
+      return urlData.publicUrl;
+    } catch (error) {
+      console.error('Photo upload failed:', error);
       throw error;
     }
-
-    const { data } = supabase.storage
-      .from('cnb-photos')
-      .getPublicUrl(fileName);
-
-    return data.publicUrl;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,7 +113,9 @@ const ProfileSetup = () => {
     try {
       let photoUrl = '';
       if (photo) {
+        console.log('Uploading photo for user:', user.id);
         photoUrl = await uploadPhoto(photo, user.id);
+        console.log('Photo uploaded successfully, URL:', photoUrl);
       }
 
       const { error } = await supabase
@@ -264,11 +286,16 @@ const ProfileSetup = () => {
                     id="photo-upload"
                   />
                   <label htmlFor="photo-upload" className="cursor-pointer">
-                    <Button type="button" variant="outline" className="flex items-center gap-2">
-                      <Upload className="w-4 h-4" />
-                      {photo ? photo.name : "Upload Photo"}
+                    <Button type="button" variant="outline" className="flex items-center gap-2" asChild>
+                      <span>
+                        <Upload className="w-4 h-4" />
+                        {photo ? photo.name : "Upload Photo"}
+                      </span>
                     </Button>
                   </label>
+                  {photo && (
+                    <span className="text-sm text-green-600">✓ Photo ready to upload</span>
+                  )}
                 </div>
               </div>
 
