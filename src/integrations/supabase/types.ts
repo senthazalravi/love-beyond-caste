@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       cnb_profiles: {
         Row: {
+          age: number | null
           city: string | null
           consent_any_caste: boolean | null
           consent_any_religion: boolean | null
@@ -38,6 +39,7 @@ export type Database = {
           whatsapp_number: string
         }
         Insert: {
+          age?: number | null
           city?: string | null
           consent_any_caste?: boolean | null
           consent_any_religion?: boolean | null
@@ -60,6 +62,7 @@ export type Database = {
           whatsapp_number: string
         }
         Update: {
+          age?: number | null
           city?: string | null
           consent_any_caste?: boolean | null
           consent_any_religion?: boolean | null
