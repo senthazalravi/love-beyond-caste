@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cnb_profiles: {
+        Row: {
+          city: string | null
+          consent_any_caste: boolean | null
+          consent_any_religion: boolean | null
+          consent_medical_report: boolean | null
+          consent_no_dowry: boolean | null
+          consent_share_contact: boolean | null
+          created_at: string
+          date_of_birth: string | null
+          email: string | null
+          gender: string | null
+          id: string
+          is_admin: boolean | null
+          marriage_timeframe: string | null
+          name: string
+          password_pin: string
+          photo_url: string | null
+          profession: string | null
+          updated_at: string
+          user_id: string
+          whatsapp_number: string
+        }
+        Insert: {
+          city?: string | null
+          consent_any_caste?: boolean | null
+          consent_any_religion?: boolean | null
+          consent_medical_report?: boolean | null
+          consent_no_dowry?: boolean | null
+          consent_share_contact?: boolean | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          gender?: string | null
+          id?: string
+          is_admin?: boolean | null
+          marriage_timeframe?: string | null
+          name: string
+          password_pin: string
+          photo_url?: string | null
+          profession?: string | null
+          updated_at?: string
+          user_id: string
+          whatsapp_number: string
+        }
+        Update: {
+          city?: string | null
+          consent_any_caste?: boolean | null
+          consent_any_religion?: boolean | null
+          consent_medical_report?: boolean | null
+          consent_no_dowry?: boolean | null
+          consent_share_contact?: boolean | null
+          created_at?: string
+          date_of_birth?: string | null
+          email?: string | null
+          gender?: string | null
+          id?: string
+          is_admin?: boolean | null
+          marriage_timeframe?: string | null
+          name?: string
+          password_pin?: string
+          photo_url?: string | null
+          profession?: string | null
+          updated_at?: string
+          user_id?: string
+          whatsapp_number?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
