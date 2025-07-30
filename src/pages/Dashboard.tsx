@@ -10,6 +10,7 @@ import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import loveBackground from '@/assets/love-background.jpg';
+import ProfileDetailsModal from '@/components/ProfileDetailsModal';
 
 interface Profile {
   id: string;
@@ -37,6 +38,8 @@ const Dashboard = () => {
     profession: '',
   });
   const [loading, setLoading] = useState(true);
+  const [selectedProfile, setSelectedProfile] = useState<Profile | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -310,11 +313,8 @@ const Dashboard = () => {
                     <Button 
                       className="flex-1 bg-gradient-to-r from-love-primary to-love-secondary hover:from-love-primary/90 hover:to-love-secondary/90 text-white"
                       onClick={() => {
-                        toast({
-                          title: "Contact Info",
-                          description: `WhatsApp: ${profile.whatsapp_number || 'Not provided'} | Email: ${profile.email}`,
-                          duration: 5000,
-                        });
+                        setSelectedProfile(profile);
+                        setIsModalOpen(true);
                       }}
                     >
                       <Heart className="w-4 h-4 mr-2 fill-current" />
@@ -352,6 +352,17 @@ const Dashboard = () => {
             </div>
           </div>
         </footer>
+
+        {/* Profile Details Modal */}
+        <ProfileDetailsModal
+          profile={selectedProfile}
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedProfile(null);
+          }}
+          calculateAge={calculateAge}
+        />
       </div>
     </div>
   );
