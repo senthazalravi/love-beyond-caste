@@ -78,6 +78,14 @@ const Dashboard = () => {
   const applyFilters = () => {
     let filtered = [...profiles];
 
+    // Filter out incomplete profiles (missing age, profession, or city)
+    filtered = filtered.filter(profile => {
+      const hasAge = profile.age || profile.date_of_birth;
+      const hasProfession = profile.profession && profile.profession.trim() !== '';
+      const hasCity = profile.city && profile.city.trim() !== '';
+      return hasAge && hasProfession && hasCity;
+    });
+
     if (filters.city) {
       filtered = filtered.filter(profile => 
         profile.city?.toLowerCase().includes(filters.city.toLowerCase())
