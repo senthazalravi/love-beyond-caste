@@ -76,7 +76,7 @@ const Dashboard = () => {
 
     if (filters.city) {
       filtered = filtered.filter(profile => 
-        profile.city.toLowerCase().includes(filters.city.toLowerCase())
+        profile.city?.toLowerCase().includes(filters.city.toLowerCase())
       );
     }
 
@@ -86,7 +86,7 @@ const Dashboard = () => {
 
     if (filters.profession) {
       filtered = filtered.filter(profile => 
-        profile.profession.toLowerCase().includes(filters.profession.toLowerCase())
+        profile.profession?.toLowerCase().includes(filters.profession.toLowerCase())
       );
     }
 
