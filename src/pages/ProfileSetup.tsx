@@ -291,11 +291,11 @@ const ProfileSetup = () => {
                   onChange={(e) => setFormData({ ...formData, aboutMe: e.target.value })}
                   placeholder="Tell us about yourself, your values, what you're looking for in a partner..."
                   className="min-h-[120px] resize-none"
-                  maxLength={500}
+                  maxLength={300}
                   required
                 />
                 <div className="text-xs text-gray-500 text-right">
-                  {formData.aboutMe.length}/500 characters
+                  {formData.aboutMe.split(' ').filter(word => word.length > 0).length}/50 words ({formData.aboutMe.length}/300 characters)
                 </div>
               </div>
 

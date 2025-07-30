@@ -410,10 +410,10 @@ const Settings = () => {
                     onChange={(e) => setProfileData({ ...profileData, about_me: e.target.value })}
                     placeholder="Tell us about yourself, your values, what you're looking for in a partner..."
                     className="min-h-[120px] resize-none"
-                    maxLength={500}
+                    maxLength={300}
                   />
                   <div className="text-xs text-gray-500 text-right">
-                    {profileData.about_me.length}/500 characters
+                    {profileData.about_me.split(' ').filter(word => word.length > 0).length}/50 words ({profileData.about_me.length}/300 characters)
                   </div>
                 </div>
 
