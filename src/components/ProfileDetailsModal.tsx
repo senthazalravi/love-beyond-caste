@@ -106,7 +106,7 @@ Email: ${profile.email}`;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[95vh] sm:h-[90vh] overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 border-2 border-gradient-to-r from-purple-300 to-pink-300 p-0">
+      <DialogContent className="max-w-4xl h-[95vh] sm:h-[90vh] overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50 border-2 border-gradient-to-r from-purple-300 to-pink-300 p-0 max-h-[95vh]">
         {/* Three.js Background Animation */}
         <div className="absolute inset-0 opacity-30">
           <Canvas camera={{ position: [0, 0, 5] }}>
@@ -129,7 +129,7 @@ Email: ${profile.email}`;
             </DialogTitle>
           </DialogHeader>
 
-          <ScrollArea className="flex-1 px-4 sm:px-6">
+          <ScrollArea className="flex-1 px-4 sm:px-6 max-h-[60vh] sm:max-h-[70vh]">
             <div className="py-4">
               {/* Mobile-optimized layout */}
               <div className="space-y-6">

@@ -1,21 +1,45 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Heart, Users, Shield, Globe } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
+import { supabase } from '@/integrations/supabase/client';
 import heartLogo from '@/assets/heart-logo.png';
 import loveBackground from '@/assets/love-background.jpg';
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [userCount, setUserCount] = useState<number>(0);
 
   useEffect(() => {
     if (user) {
       navigate('/dashboard');
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    fetchUserCount();
+  }, []);
+
+  const fetchUserCount = async () => {
+    try {
+      const { count, error } = await supabase
+        .from('cnb_profiles')
+        .select('*', { count: 'exact', head: true });
+      
+      if (error) {
+        console.error('Error fetching user count:', error);
+        setUserCount(500); // Fallback number
+      } else {
+        setUserCount(count || 0);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setUserCount(500); // Fallback number
+    }
+  };
 
   return (
     <div 
@@ -92,8 +116,24 @@ const Index = () => {
                 Find Your Soulmate
               </Button>
               
+              <div className="bg-white/20 backdrop-blur-sm rounded-lg p-6 mb-6 border border-white/30">
+                <div className="flex items-center justify-center gap-3 mb-2">
+                  <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
+                  <span className="text-2xl md:text-3xl font-bold text-white">
+                    {userCount.toLocaleString()}+
+                  </span>
+                  <Heart className="w-6 h-6 text-white fill-current animate-pulse" />
+                </div>
+                <p className="text-white/90 text-lg font-semibold">
+                  Hearts Connected • Souls United
+                </p>
+                <p className="text-white/80 text-sm mt-1">
+                  Join our growing community of love seekers
+                </p>
+              </div>
+              
               <p className="text-white/80 text-sm">
-                Join thousands finding love beyond traditional boundaries
+                Find meaningful connections beyond traditional boundaries
               </p>
             </div>
           </div>
