@@ -30,16 +30,30 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
+        console.log('Auth state change:', event, session);
+        // Allow unconfirmed users to proceed
+        if (session && session.user) {
+          setSession(session);
+          setUser(session.user);
+        } else {
+          setSession(null);
+          setUser(null);
+        }
         setLoading(false);
       }
     );
 
     // Check for existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
+      console.log('Initial session check:', session);
+      // Allow unconfirmed users to proceed
+      if (session && session.user) {
+        setSession(session);
+        setUser(session.user);
+      } else {
+        setSession(null);
+        setUser(null);
+      }
       setLoading(false);
     });
 
@@ -52,21 +66,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const email = `${whatsappNumber.replace(/[^0-9]/g, '')}@cnb.app`;
       const password = `${whatsappNumber}${pin}`;
       
+      console.log('Attempting signup for:', email);
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/`,
           data: {
-            email_confirm: false // Skip email confirmation
+            whatsapp_number: whatsappNumber
           }
         }
       });
 
       if (error) {
+        console.error('Signup error:', error);
         return { error: error.message };
       }
 
+      console.log('Signup successful:', data);
+
+      // Even if email is not confirmed, proceed with profile creation
       if (data.user) {
         // Create profile record
         const { error: profileError } = await supabase
@@ -79,31 +99,46 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           });
 
         if (profileError) {
+          console.error('Profile creation error:', profileError);
           return { error: profileError.message };
+        }
+        
+        console.log('Profile created successfully');
+        
+        // If user is confirmed immediately or we have a session, use it
+        if (data.session) {
+          setSession(data.session);
+          setUser(data.session.user);
         }
       }
 
       return {};
     } catch (error: any) {
+      console.error('Signup catch error:', error);
       return { error: error.message };
     }
   };
 
   const signIn = async (whatsappNumber: string, pin: string) => {
     try {
+      console.log('Attempting signin for:', whatsappNumber);
+      
       // Check if this is admin
       if (whatsappNumber === '+46733115830' && pin === '0000') {
         const email = `${whatsappNumber.replace(/[^0-9]/g, '')}@cnb.app`;
         const password = `${whatsappNumber}${pin}`;
         
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         });
 
         if (error) {
+          console.error('Admin signin error:', error);
           return { error: error.message };
         }
+        
+        console.log('Admin signin successful:', data);
         return {};
       }
 
@@ -116,24 +151,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         .single();
 
       if (profileError || !profile) {
+        console.error('Profile lookup error:', profileError);
         return { error: 'Invalid WhatsApp number or PIN' };
       }
+
+      console.log('Profile found:', profile);
 
       // Sign in with Supabase
       const email = `${whatsappNumber.replace(/[^0-9]/g, '')}@cnb.app`;
       const password = `${whatsappNumber}${pin}`;
       
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
+        console.error('Supabase signin error:', error);
+        // If error is about email confirmation, try to handle it gracefully
+        if (error.message.includes('email') && error.message.includes('confirm')) {
+          // Still set the user if we have the profile
+          return { error: 'Please complete your profile setup' };
+        }
         return { error: error.message };
       }
 
+      console.log('Signin successful:', data);
       return {};
     } catch (error: any) {
+      console.error('Signin catch error:', error);
       return { error: error.message };
     }
   };

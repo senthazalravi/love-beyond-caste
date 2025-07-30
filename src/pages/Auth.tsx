@@ -74,6 +74,7 @@ const Auth = () => {
           title: "Success!",
           description: isLogin ? "Welcome back!" : "Account created successfully!",
         });
+        // Navigate to profile setup for all successful authentications
         navigate('/profile-setup');
       }
     } catch (error: any) {
