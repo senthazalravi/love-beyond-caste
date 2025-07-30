@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Heart, Upload } from 'lucide-react';
+import { Heart, Upload, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -179,6 +179,9 @@ const ProfileSetup = () => {
               <Heart className="w-6 h-6 fill-current" />
               Complete Your Profile
             </CardTitle>
+            <CardDescription className="text-gray-600">
+              Fill out your profile to find your perfect match, or skip to browse other profiles
+            </CardDescription>
           </CardHeader>
 
           <CardContent>
@@ -381,13 +384,25 @@ const ProfileSetup = () => {
                 </div>
               </div>
 
-              <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-love-primary to-love-secondary hover:from-love-primary/90 hover:to-love-secondary/90 text-white font-semibold py-3"
-                disabled={loading}
-              >
-                {loading ? "Saving..." : "Complete Profile"}
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => navigate('/dashboard')}
+                >
+                  <ArrowRight className="w-4 h-4 mr-2" />
+                  Skip for Now
+                </Button>
+                
+                <Button
+                  type="submit"
+                  className="flex-1 bg-gradient-to-r from-love-primary to-love-secondary hover:from-love-primary/90 hover:to-love-secondary/90 text-white font-semibold py-3"
+                  disabled={loading}
+                >
+                  {loading ? "Saving..." : "Complete Profile"}
+                </Button>
+              </div>
             </form>
           </CardContent>
         </Card>

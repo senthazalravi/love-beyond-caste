@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Heart, Phone } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import heartLogo from '@/assets/heart-logo.png';
 import loveBackground from '@/assets/love-background.jpg';
 
@@ -74,8 +75,21 @@ const Auth = () => {
           title: "Success!",
           description: isLogin ? "Welcome back!" : "Account created successfully!",
         });
-        // Navigate to profile setup for all successful authentications
-        navigate('/profile-setup');
+        
+        // Check if user has completed profile setup
+        const { data: profileData } = await supabase
+          .from('cnb_profiles')
+          .select('name, profession, city')
+          .eq('whatsapp_number', whatsappNumber)
+          .single();
+        
+        // If profile is incomplete (missing required fields), go to profile setup
+        if (!profileData?.name || !profileData?.profession || !profileData?.city) {
+          navigate('/profile-setup');
+        } else {
+          // Profile is complete, go to dashboard
+          navigate('/dashboard');
+        }
       }
     } catch (error: any) {
       toast({
