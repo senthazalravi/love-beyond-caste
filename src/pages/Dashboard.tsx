@@ -78,7 +78,7 @@ const Dashboard = () => {
       );
     }
 
-    if (filters.gender) {
+    if (filters.gender && filters.gender !== 'all') {
       filtered = filtered.filter(profile => profile.gender === filters.gender);
     }
 
@@ -88,7 +88,7 @@ const Dashboard = () => {
       );
     }
 
-    if (filters.age) {
+    if (filters.age && filters.age !== 'all') {
       const [minAge, maxAge] = filters.age.split('-').map(Number);
       filtered = filtered.filter(profile => {
         const age = new Date().getFullYear() - new Date(profile.date_of_birth).getFullYear();
@@ -182,7 +182,7 @@ const Dashboard = () => {
                     <SelectValue placeholder="Select age range" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Ages</SelectItem>
+                    <SelectItem value="all">All Ages</SelectItem>
                     <SelectItem value="18-25">18-25 years</SelectItem>
                     <SelectItem value="26-30">26-30 years</SelectItem>
                     <SelectItem value="31-35">31-35 years</SelectItem>
@@ -199,7 +199,7 @@ const Dashboard = () => {
                     <SelectValue placeholder="Select gender" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Genders</SelectItem>
+                    <SelectItem value="all">All Genders</SelectItem>
                     <SelectItem value="Male">Male</SelectItem>
                     <SelectItem value="Female">Female</SelectItem>
                     <SelectItem value="Other">Other</SelectItem>
