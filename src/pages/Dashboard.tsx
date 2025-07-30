@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User, MessageCircle, Settings } from 'lucide-react';
+import { Heart, LogOut, Filter, MapPin, Briefcase, Calendar, User, MessageCircle, Settings, Github } from 'lucide-react';
 import { useAuth } from '@/components/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -347,6 +347,11 @@ const Dashboard = () => {
             <p className="text-white/90 text-lg font-medium">Love Beyond Boundaries</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm">
               <p>Created with ❤️ by <a href="https://x.com/senthazalravi" target="_blank" rel="noopener noreferrer" className="text-white hover:text-love-tertiary font-semibold underline decoration-white/50 hover:decoration-love-tertiary transition-colors">@senthazalravi</a></p>
+              <span className="hidden sm:inline text-white/60">•</span>
+              <a href="https://github.com/senthazalravi/love-beyond-caste.git" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-love-tertiary font-semibold underline decoration-white/50 hover:decoration-love-tertiary transition-colors">
+                <Github className="w-4 h-4" />
+                View on GitHub
+              </a>
               <span className="hidden sm:inline text-white/60">•</span>
               <p className="text-white/80">© 2025 Lovable Dev</p>
             </div>
